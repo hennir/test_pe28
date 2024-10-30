@@ -45,7 +45,7 @@ def generate_post(topic):
         response_title = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt_title}],
-            max_tokens=50,
+            max_tokens=100,
             n=1,
             temperature=0.7,
         )
@@ -59,7 +59,7 @@ def generate_post(topic):
         response_meta = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt_meta}],
-            max_tokens=100,
+            max_tokens=200,
             n=1,
             temperature=0.7,
         )
@@ -71,7 +71,7 @@ def generate_post(topic):
     prompt_post = (
         f"Напишите подробный и увлекательный пост для блога на тему: {topic}, учитывая следующие последние новости:\n"
         f"{recent_news}\n\n"
-        "Используйте короткие абзацы, подзаголовки, примеры и ключевые слова для лучшего восприятия и SEO-оптимизации."
+        "Используйте короткие абзацы, подзаголовки, примеры и ключевые слова для лучшего восприятия и SEO-оптимизации. Оформи с использованием markdown разметки с учетом того, что это будет опубликовано в Телеграм."
     )
     try:
         response_post = openai.ChatCompletion.create(
