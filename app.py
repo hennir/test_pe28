@@ -86,9 +86,9 @@ def generate_post(topic):
         raise HTTPException(status_code=500, detail=f"Ошибка при генерации контента поста: {str(e)}")
 
     # Экранирование специальных символов
-    title = escape_special_chars(title)
-    meta_description = escape_special_chars(meta_description)
-    post_content = escape_special_chars(post_content)
+    #title = escape_special_chars(title)
+    #meta_description = escape_special_chars(meta_description)
+    #post_content = escape_special_chars(post_content)
     
     return {
         "title": title,
