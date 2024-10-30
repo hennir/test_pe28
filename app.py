@@ -30,12 +30,6 @@ def get_recent_news(topic):
     recent_news = [article["title"] for article in articles[:1]]
     return "\n".join(recent_news)
 
-def escape_special_chars(text):
-    # Символы, которые нужно экранировать
-    special_chars = r"[_\*\[\]\(\)~`>#\+\-=|{}.!]"
-    # Замена символов на экранированные версии
-    return re.sub(special_chars, r"\\\g<0>", text)
-
 def generate_post(topic):
     recent_news = get_recent_news(topic)
 
@@ -50,6 +44,9 @@ def generate_post(topic):
             temperature=0.7,
         )
         title = response_title.choices[0].message.content.strip()
+        # Удаление первой и последней кавычки, если они есть
+        if title.startswith('"') and title.endswith('"'):
+            title = title[1:-1]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при генерации заголовка: {str(e)}")
 
@@ -85,11 +82,6 @@ def generate_post(topic):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при генерации контента поста: {str(e)}")
 
-    # Экранирование специальных символов
-    #title = escape_special_chars(title)
-    #meta_description = escape_special_chars(meta_description)
-    #post_content = escape_special_chars(post_content)
-    
     return {
         "title": title,
         "meta_description": meta_description,
