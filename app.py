@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import openai
 import requests
+import re
 
 app = FastAPI()
 
